@@ -1,27 +1,33 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Nov  8 17:00:25 2019
+Created on Sat Nov  9 15:49:04 2019
 
-@author: user
+@author: dyb
 """
 
-from time import sleep
-from json import dumps
 from kafka import KafkaProducer
-import pandas_datareader.data as web
-import datetime
+import sys
+import json
+from kafka.errors import KafkaError
+import csv
+#import time
 
-start = datetime.datetime(2010, 1, 1)
-end = datetime.datetime(2017, 1, 11)
+producer = KafkaProducer(bootstrap_servers='localhost:9092',
+                           value_serializer=lambda m: json.dumps(m).encode('ascii'))
 
-df = web.DataReader("AAPL", 'yahoo', start, end)
+topic ="stock"
 
 
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'],value_serializer=lambda x:dumps(x).encode('utf-8'))
+with open(sys.argv[1], newline='') as csvfile:
+    reader = csv.reader(csvfile, delimiter=',')
 
-for e in range(100):
-    #dat = df[['High','Low']].iloc[e:(e+1)*10].to_json()
-    dat = e
-    data = {'number':dat}
-    producer.send('numtest', value=data)
-    sleep(1)
+    for row in reader:
+        future = producer.send(topic, row[1])
+        #time.sleep(1)
+
+        try:
+            future.get(timeout=10)
+        except KafkaError as e:
+            print(e)
+            break
