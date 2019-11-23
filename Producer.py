@@ -1,27 +1,40 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov  8 17:00:25 2019
-
-@author: user
-"""
-
-from time import sleep
-from json import dumps
 from kafka import KafkaProducer
-import pandas_datareader.data as web
-import datetime
+from datetime import datetime
+from time import sleep
+import sys
 
-start = datetime.datetime(2010, 1, 1)
-end = datetime.datetime(2017, 1, 11)
+def connect_kafka_producer():
+	producer = None
+	try:
+		producer = KafkaProducer(bootstrap_servers='localhost:9092')
+	except Exception as ex:
+		print("Exception while connecting to Kafka")
+		print(str(ex))
+	finally:
+		return producer
 
-df = web.DataReader("AAPL", 'yahoo', start, end)
+def publish_message(producer_instance, topic, key, value):
+	try:
+		key_bytes = bytes(key, encoding='utf-8')
+		value_bytes = bytes(value, encoding='utf-8')
+		producer_instance.send(topic, key=key_bytes, value=value_bytes)
+		producer.flush()
+		print('Message published succesfully at {}'.format(datetime.now()))
+	except Exception as ex:
+		print("Exception in publishing message")
+		print(str(ex))
+
+if __name__ == '__main__':
+	"""
+	Read a text or csv file and publish message every second
+	"""
+	file = str(sys.argv[1])
+	topic = str(sys.argv[2])
+	data = open(file)
+	producer = connect_kafka_producer()
+	for line in data.readlines():
+		publish_message(producer, topic, "line", line.strip("\n"))
+		sleep(1)
 
 
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'],value_serializer=lambda x:dumps(x).encode('utf-8'))
 
-for e in range(100):
-    #dat = df[['High','Low']].iloc[e:(e+1)*10].to_json()
-    dat = e
-    data = {'number':dat}
-    producer.send('numtest', value=data)
-    sleep(1)
