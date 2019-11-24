@@ -2,6 +2,7 @@ import os
 import numpy as np
 from tensorflow.keras.models import model_from_json
 from time import sleep
+import subprocess
 
 if __name__ == '__main__':
 	json_file = open('model.json', 'r')
@@ -12,7 +13,7 @@ if __name__ == '__main__':
 	# load weights into new model
 	loaded_model.load_weights("model.h5")
 	loaded_model.compile(loss="mean_squared_error", optimizer='adam')
-
+	
 	index = 0
 	curr_len = 0
 	while True:
