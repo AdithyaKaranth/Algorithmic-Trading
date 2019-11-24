@@ -42,7 +42,7 @@ async def hello(stream):
         	#Trading algorithm insert here!
 		if index==30:
 			et = time.time() - start_time	
-	print("Elapsed Time: " + str(et) +"\tPredcitions: " + str(index) + "\tLatency: " + str(index/et))
+	print("Elapsed Time: " + str(et) +"\tPredcitions: " + str(index) + "\tLatency: " + str(et/index))
 
 
 if __name__ == '__main__':
