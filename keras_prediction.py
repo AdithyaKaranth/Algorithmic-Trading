@@ -38,5 +38,5 @@ if __name__ == '__main__':
 
 		
 	elapsed_time = time.time() - start_time
-	print('Elasped time: ' + str(elapsed_time) + '\tPredictions: ' + str(index) + '\tLatency: ' + str(index / elapsed_time))
+	print('Elasped time: ' + str(elapsed_time) + '\tPredictions: ' + str(index) + '\tLatency: ' + str(elapsed_time/index))
 
