@@ -5,18 +5,17 @@ Created on Fri Nov  8 15:36:36 2019
 
 @author: dyb
 """
-
 import faust
 import numpy as np
 from tensorflow.keras.models import model_from_json
 
 
-json_file = open('/Users/dyb/Spyder/Big Data/model.json', 'r')
+json_file = open('/home/Big Data/Algorithmic-Trading/model.json', 'r')
 loaded_model_json = json_file.read()
 json_file.close()
 loaded_model = model_from_json(loaded_model_json)
 # load weights into new model
-loaded_model.load_weights("/Users/dyb/Spyder/Big Data/model.h5")
+loaded_model.load_weights("/home/Big Data/Algorithmic-Trading/model.h5")
 #print("Loaded model from disk")
 
 
