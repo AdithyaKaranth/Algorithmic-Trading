@@ -11,7 +11,7 @@ import numpy as np
 def createContext():
 	sc = SparkContext(appName="Kafka2Spark")
 	sc.setLogLevel("ERROR")
-	ssc = StreamingContext(sc, 1)
+	ssc = StreamingContext(sc, 0.5)
 	
 	# Define KafkaConsumer
 	kafkaStream = KafkaUtils.createStream(ssc, 'localhost:2181', 'spark-streaming', {'experiment':1})

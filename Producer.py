@@ -52,4 +52,3 @@ if __name__ == '__main__':
 	producer = connect_kafka_producer()
 	for line in cat.stdout:
 		publish_message(producer,topic,"line",line)
-		sleep(1)
