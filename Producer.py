@@ -2,6 +2,7 @@ from kafka import KafkaProducer
 from datetime import datetime
 from time import sleep
 import sys
+import subprocess
 
 def connect_kafka_producer():
 	producer = None
@@ -28,12 +29,16 @@ if __name__ == '__main__':
 	"""
 	Read a text or csv file and publish message every second
 	"""
-	file = str(sys.argv[1])
-	topic = str(sys.argv[2])
-	print(file)
+	#file = "/user/BigData/x_test.csv"
+	topic = str(sys.argv[1])
+	#print(file)
 	print(topic)
-	data = open(file)
+	#data=open(file) 
+	cat = subprocess.Popen(["hadoop","fs","-cat","/user/BigData/x_test.csv",],stdout=subprocess.PIPE)
 	producer = connect_kafka_producer()
-	for line in data.readlines():
-		publish_message(producer, topic, "line", line)
-		sleep(1)
+	for line in cat.stdout:
+		publish_message(producer,topic,"line",line)
+	#producer = connect_kafka_producer()
+	#for line in data.readlines():
+		#publish_message(producer, topic, "line", line)
+		#sleep(1)
