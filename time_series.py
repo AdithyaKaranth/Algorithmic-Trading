@@ -37,7 +37,7 @@ def createContext():
 	messages.pprint(1)
 
 	# Write on txt file
-	messages.saveAsTextFiles('out_folder/out.txt')
+	messages.saveAsTextFiles('file:///home/BigData/Algorithmic-Trading/out_folder/out.txt')
 	
 	return ssc
 

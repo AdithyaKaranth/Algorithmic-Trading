@@ -1,9 +1,10 @@
-# how to read crc file
+
 # how to keep reading new files in the directory to make prediction
 import os
 import numpy as np
 from tensorflow.keras.models import model_from_json
 from time import sleep
+import subprocess
 
 if __name__ == '__main__':
 	json_file = open('model.json', 'r')
@@ -14,7 +15,16 @@ if __name__ == '__main__':
 	loaded_model.load_weights("model.h5")
 	#print("Loaded model from disk")
 	loaded_model.compile(loss="mean_squared_error", optimizer='adam')
-
+	
+	'''cmd = 'hadoop fs -ls /user/BigData/out_folder'
+	files = subprocess.check_output(cmd, shell=True).strip().split('\n')
+	for line in files:
+		try:
+			cmd = 'hadoop fs -cat '+ line.split()[7]+'/part-00000'
+			output = subprocess.check_output(cmd,shell= True)
+			print(output)
+		except:
+			pass'''
 	index = 0
 	curr_len = 0
 	while True:
