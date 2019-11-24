@@ -4,6 +4,9 @@ from time import sleep
 import sys
 
 def connect_kafka_producer():
+	"""
+	Initializes a Kafka producer
+	"""
 	producer = None
 	try:
 		producer = KafkaProducer(bootstrap_servers='localhost:9092')
@@ -14,6 +17,21 @@ def connect_kafka_producer():
 		return producer
 
 def publish_message(producer_instance, topic, key, value):
+	"""
+	Publishes the message to a Kafka broker. 
+	Default localhost of Kafka broker is 2181.
+
+	@Param:topic
+	The Kafka topic we are interested publishing on. 
+
+	@Param:key
+	The key for the key-value pair
+
+	@Param: value
+	The value for the key-value pair
+
+
+	"""
 	try:
 		key_bytes = bytes(key, encoding='utf-8')
 		value_bytes = bytes(value, encoding='utf-8')
