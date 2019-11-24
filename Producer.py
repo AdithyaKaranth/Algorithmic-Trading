@@ -19,7 +19,7 @@ producer = KafkaProducer(bootstrap_servers='localhost:9092',
 topic ="stock"
 
 
-with open(sys.argv[1], newline='') as csvfile:
+with open(sys.argv[1]) as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
 
     for row in reader:
