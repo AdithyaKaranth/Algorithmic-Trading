@@ -2,6 +2,7 @@ import os
 import numpy as np
 from tensorflow.keras.models import model_from_json
 from time import sleep
+import time
 import subprocess
 
 if __name__ == '__main__':
@@ -16,7 +17,8 @@ if __name__ == '__main__':
 	
 	index = 0
 	curr_len = 0
-	while True:
+	start_time = time.time()
+	while index<50:
 		directory = os.listdir("out_folder")
 		new_len = len(directory)
 		if new_len > curr_len:
@@ -28,9 +30,13 @@ if __name__ == '__main__':
 						data = np.array(float(line)).reshape((1,1,1))
 						pred = loaded_model.predict(data)
 						print(pred)
+			except:
+				pass
 			finally:	
 				index += 1
 			curr_len = new_len
 
-
+		
+	elapsed_time = time.time() - start_time
+	print('Elasped time: ' + str(elapsed_time) + '\tPredictions: ' + str(index) + '\tLatency: ' + str(index / elapsed_time))
 
