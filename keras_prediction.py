@@ -18,7 +18,8 @@ if __name__ == '__main__':
 	index = 0
 	curr_len = 0
 	start_time = time.time()
-	while index<50:
+	predict_num = 0
+	while predict_num<100:
 		directory = os.listdir("out_folder")
 		new_len = len(directory)
 		if new_len > curr_len:
@@ -29,6 +30,7 @@ if __name__ == '__main__':
 					for line in file.readlines():
 						data = np.array(float(line)).reshape((1,1,1))
 						pred = loaded_model.predict(data)
+						predict_num += 1
 						print(pred)
 			except:
 				pass
@@ -38,5 +40,5 @@ if __name__ == '__main__':
 
 		
 	elapsed_time = time.time() - start_time
-	print('Elasped time: ' + str(elapsed_time) + '\tPredictions: ' + str(index) + '\tLatency: ' + str(elapsed_time/index))
+	print('Elasped time: ' + str(elapsed_time) + '\tPredictions: ' + str(pred_num) + '\tLatency: ' + str(elapsed_time/index))
 
