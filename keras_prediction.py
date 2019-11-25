@@ -19,7 +19,7 @@ if __name__ == '__main__':
 	curr_len = 0
 	start_time = time.time()
 	predict_num = 0
-	while predict_num<100:
+	while predict_num<30:
 		directory = os.listdir("out_folder")
 		new_len = len(directory)
 		if new_len > curr_len:
@@ -40,5 +40,5 @@ if __name__ == '__main__':
 
 		
 	elapsed_time = time.time() - start_time
-	print('Elasped time: ' + str(elapsed_time) + '\tPredictions: ' + str(pred_num) + '\tLatency: ' + str(elapsed_time/index))
+	print('Elasped time: ' + str(elapsed_time) + '\tPredictions: ' + str(predict_num) + '\tLatency: ' + str(elapsed_time/predict_num))
 
