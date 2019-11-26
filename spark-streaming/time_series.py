@@ -20,7 +20,7 @@ def createContext():
 	messages = kafkaStream.map(lambda x: x[1])
 
 	# Write on txt file
-	messages.saveAsTextFiles('file:///home/BigData/Algorithmic-Trading/out_folder/out.txt')
+	messages.saveAsTextFiles('file:///home/BigData/Algorithmic-Trading/spark-streaming/out_folder/out.txt')
 	
 	return ssc
 
